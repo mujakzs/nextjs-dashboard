@@ -23,7 +23,6 @@ export async function fetchRevenue() {
 
     console.log('Data fetch completed after 3 seconds.');
 
-    // console.log('Data fetch completed after 3 seconds.');
 
     return data;
   } catch (error) {
