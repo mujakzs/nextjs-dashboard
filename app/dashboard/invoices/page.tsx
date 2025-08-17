@@ -3,8 +3,16 @@ import { CreateInvoice } from "@/app/ui/invoices/buttons";
 import Search from "@/app/ui/search";
 import Pagination from "@/app/ui/invoices/pagination";
 import Table from "@/app/ui/invoices/table";
+import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import { Suspense } from "react";
 
-export default function Page() {
+export default async function Page(props: {
+  searchParams?: Promise<{ query?: string; page?: string }>;
+}) {
+
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
     
   return (
     <div className="w-full">
@@ -15,9 +23,9 @@ export default function Page() {
         <Search placeholder="Search Invoices..."/>
         <CreateInvoice/>
       </div>
-        {/*  <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
-      </Suspense> */}
+          <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+            <Table query={query} currentPage={currentPage} />
+          </Suspense>
       <div>
        {/* <Pagination totalPages={totalPages} /> */}
       </div>
